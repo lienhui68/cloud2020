@@ -1,0 +1,9 @@
+GET http://localhost/order/payment/1
+
+###
+
+### Send POST request with body as parameters
+POST http://localhost/order/payment/create
+Content-Type: application/x-www-form-urlencoded
+
+serial=david003
