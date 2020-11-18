@@ -1,0 +1,23 @@
+server:
+  port: 8802
+
+spring:
+  application:
+    name: cloud-stream-rabbitmq-consumer8802
+  # 设置rabbitmq的相关的环境配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: eh-vhost
+  cloud:
+    stream:
+      binders: # 在此处配置要绑定的rabbitmq的服务信息；
+        eh-rabbit: # 表示定义的绑定器名称，用于和binding整合
+          type: rabbit # 消息组件类型
+      bindings: # 服务的整合处理
+        input: # 这个名字是一个通道的名称，对应org.springframework.cloud.stream.messaging.Sink.OUTPUT
+          destination: exchange.eh.test # 表示要使用的exchange名称定义
+          content-type: application/json # 设置消息类型，本次为json，文本则设置“text/plain”
+          binder: eh-rabbit # 设置要绑定的消息服务的具体设置,需与自定义名称一致,飘红：Settings->Editor->Inspections->Spring->Spring Boot->Spring Boot application.yml 对勾去掉

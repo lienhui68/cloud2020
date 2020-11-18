@@ -16,6 +16,14 @@ public class CommonResult<T> {
         return commonResult;
     }
 
+    public static <T> CommonResult<T> success(T data, String desc) {
+        CommonResult<T> commonResult = new CommonResult<>();
+        commonResult.setCode(200);
+        commonResult.setDesc(desc);
+        commonResult.setData(data);
+        return commonResult;
+    }
+
     public static <T> CommonResult<T> error(Integer code, String desc) {
         CommonResult<T> commonResult = new CommonResult<>();
         commonResult.setCode(code);

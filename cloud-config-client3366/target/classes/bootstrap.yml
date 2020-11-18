@@ -1,0 +1,30 @@
+server:
+  port: 3355
+spring:
+  application:
+    name: cloud-config-client
+  cloud:
+    # 下面四项拼起来就是http://localhost:3344/main/config-dev.yml
+    config:
+      # 分支名称
+      label: main
+      # 配置文件名称
+      name: config
+      # 环境profile
+      profile: dev
+      # 配置中心地址
+      uri: http://localhost:3344
+  #rabbitmq相关配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: eh-vhost
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

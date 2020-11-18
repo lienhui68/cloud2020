@@ -7,3 +7,7 @@ POST http://localhost:8001/payment/create
 Content-Type: application/x-www-form-urlencoded
 
 serial=david001
+
+###
+
+GET http://localhost:8001/payment/discovery

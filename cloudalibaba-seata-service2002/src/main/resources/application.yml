@@ -1,0 +1,67 @@
+server:
+  port: 2002
+
+spring:
+  application:
+    name: cloudalibaba-seata-service2002
+  cloud:
+    nacos:
+      discovery:
+        #配置nacos地址
+        server-addr: localhost:8848
+  datasource:
+    storage:
+      type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+      driver-class-name: com.mysql.cj.jdbc.Driver             # mysql驱动包
+      # springboot2.0以上配置多数据源，需要将url改成jdbc-url
+      # spring.datasource.url 数据库的 JDBC URL
+      # spring.datasource.jdbc-url 用来重写自定义连接池
+      # 官方给出的解释是：因为连接池的实际类型没有被公开，所以在您的自定义数据源的元数据中没有生成密钥，
+      # 而且在IDE中没有完成(因为DataSource接口没有暴露属性)。另外，如果您碰巧在类路径上有Hikari，那么这个基本设置就不起作用了，
+      # 因为Hikari没有url属性(但是确实有一个jdbcUrl属性)。在这种情况下，您必须重写您的配置
+      jdbc-url: jdbc:mysql://localhost:3306/seata_demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: 333
+    order:
+      type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+      driver-class-name: com.mysql.cj.jdbc.Driver             # mysql驱动包
+      jdbc-url: jdbc:mysql://localhost:3306/seata_demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: 333
+    account:
+      type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+      driver-class-name: com.mysql.cj.jdbc.Driver             # mysql驱动包
+      jdbc-url: jdbc:mysql://localhost:3306/seata_demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: 333
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  # seata服务
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default  # 此处key需要与tx-service-group的value一致，否则会报 no available service 'null' found, please make sure registry config correct 异常
+    grouplist:
+      default: localhost:8091
+    enable-degrade: false
+    disable-global-transaction: false
+  # seata配置，使用nacos作为配置中心
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      serverAddr: localhost:8848
+      group: SEATA_GROUP
+      userName: ""
+      password: ""
+  # seata服务所在注册中心
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server  # 此处名称需和 seata server 服务端 application一致,否则会报 no available service 'null' found, please make sure registry config correct 异常
+      server-addr: localhost:8848
+      namespace:
+      userName: ""
+      password: ""

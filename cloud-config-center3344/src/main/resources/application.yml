@@ -1,0 +1,17 @@
+server:
+  port: 3344
+
+spring:
+  application:
+    name: cloud-config-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:lienhui68/microservice-cloud-config.git
+          # 搜索目录
+          search-paths: microservice-cloud-config
+          # 注意github默认主分支是main，但是config默认分支是master，所以需要修改，master->main
+          default-label: main
+      ####读取分支
+      label: main
